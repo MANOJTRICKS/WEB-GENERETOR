@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝐌ᴀɴᴏᴊ 𝐈ᴍᴀɢᴇ 𝐆ᴇɴᴇʀᴀᴛᴏʀ</title>
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Base styling for body */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom right, #2d89e5, #192a56);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Container styling */
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 450px;
+            width: 100%;
+        }
+
+        /* Header styling */
+        .container h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #00d1ff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Input and button styling */
+        input[type="text"], button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            background-color: #1e3553;
+            color: #ffffff;
+            transition: box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            box-shadow: 0 0 10px #00d1ff;
+        }
+
+        button {
+            background: linear-gradient(90deg, #007bff, #00c6ff);
+            color: #ffffff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 191, 255, 0.5);
+        }
+
+        /* Image styling */
+        img {
+            max-width: 100%;
+            border-radius: 12px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        /* Spinner styling */
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid #00d1ff;
+            border-radius: 50%;
+            margin: 20px auto;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Telegram button */
+        .telegram-link {
+            display: none;
+            margin-top: 20px;
+            text-decoration: none;
+            background: linear-gradient(90deg, #007bff, #00c6ff);
+            padding: 12px 20px;
+            color: white;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .telegram-link:hover {
+            transform: scale(1.05);
+            background-color: #007bff;
+        }
+
+        /* Regenerate button */
+        #regenerateButton {
+            display: none;
+            background: none;
+            border: 2px solid #00d1ff;
+            color: #00d1ff;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        #regenerateButton:hover {
+            background: #00d1ff;
+            color: #ffffff;
+        }
+
+        /* Footer styling */
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #00d1ff;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>𝐌ᴀɴᴏᴊ 𝐈ᴍᴀɢᴇ 𝐆ᴇɴᴇʀᴀᴛᴏʀ</h1>
+        <input type="text" id="promptInput" placeholder="Enter your creative prompt" />
+        <button onclick="generateImage()">Generate Image</button>
+        <div class="spinner" id="loadingSpinner"></div>
+        <img id="generatedImage" src="" alt="Generated Image" />
+        <button id="regenerateButton" onclick="regenerateImage()">Regenerate</button>
+        <a href="https://whatsapp.com/channel/0029VaT1ewtI1rcbm9xB4s0U" target="_blank" class="telegram-link" id="telegramLink">
+            Join Our WhatsApp
+        </a>
+        <div class="footer">
+            ©𝐏ᴏᴡᴇʀᴇᴅ 𝐁ʏ 𝐌ᴀɴᴏᴊ-𝐀ɪ
+        </div>
+    </div>
+
+    <script>
+        // Function to generate or regenerate the image
+        function generateImage() {
+            const prompt = document.getElementById("promptInput").value.trim();
+            if (!prompt) {
+                alert("Please enter a prompt.");
+                return;
+            }
+            displayImage(prompt);
+        }
+
+        function regenerateImage() {
+            const prompt = document.getElementById("promptInput").value.trim();
+            if (!prompt) {
+                alert("Please enter a prompt.");
+                return;
+            }
+            displayImage(prompt);
+        }
+
+        // Helper function to display the image with loading animation
+        function displayImage(prompt) {
+            const imageUrl = `https://img.hazex.workers.dev/?prompt=${encodeURIComponent(prompt)}&improve=true&format=square&random=${Math.random()}`;
+            const imageElement = document.getElementById("generatedImage");
+            const spinner = document.getElementById("loadingSpinner");
+            const regenerateButton = document.getElementById("regenerateButton");
+            const telegramLink = document.getElementById("telegramLink");
+
+            // Show the loading spinner and hide other elements
+            spinner.style.display = "block";
+            imageElement.style.display = "none";
+            regenerateButton.style.display = "none";
+            telegramLink.style.display = "none";
+
+            // Load the image
+            imageElement.onload = () => {
+                spinner.style.display = "none";
+                imageElement.style.display = "block";
+                regenerateButton.style.display = "inline-block";
+                telegramLink.style.display = "inline-block";
+            };
+
+            imageElement.src = imageUrl;
+        }
+    </script>
+</body>
+</html>
